@@ -1,11 +1,18 @@
 const express = require('express');
-const { request } = require('http');
+/* const { request } = require('http'); */
 const path = require('path');
+const exphbs = require('express-handlebars');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.engine('handlebars', exphbs.engine({
+    defaultLayout: 'main'
+}));
+
+app.set('view engine', 'handlebars');
 
 /* List all the books 
 List the data of one book DONE
@@ -22,7 +29,8 @@ let books = [
 
 //route to '(route)home'
 app.get('/', (request, response) => {
-    response.sendFile(path.join(__dirname, 'public', 'index.html'));
+    //response.sendFile(path.join(__dirname, 'public', 'index.html'));
+    response.render('index');
 });
 
 app.get('/about', (request, response) => {
