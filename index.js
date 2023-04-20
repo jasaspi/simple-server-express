@@ -12,11 +12,8 @@ app.engine('handlebars', exphbs.engine({
     defaultLayout: 'main'
 }));
 
-app.set('view engine', 'handlebars');
+app.set('view engine', '.handlebars');
 
-app.get('/', (request, response) => {
-    response.render('index')
-});
 
 /* List all the books 
 List the data of one book DONE
@@ -31,11 +28,22 @@ let books = [
     { id: '3', title: 'JavaScript', year: 2001, author: 'Koodari Koodinen' }
 ]
 
+app.get('/books', (request, response) => {
+    //response.sendFile(path.join(__dirname, 'public', 'index.html'));
+    response.render('books', {
+        books: books
+    }
+    );
+
+});
+
+
 //route to '(route)home'
-// app.get('/', (request, response) => {
-//     //response.sendFile(path.join(__dirname, 'public', 'index.html'));
-//     response.render('index');
-// });
+app.get('/', (request, response) => {
+    //response.sendFile(path.join(__dirname, 'public', 'index.html'));
+    response.render('index');
+
+});
 
 app.get('/about', (request, response) => {
     response.sendFile(path.join(__dirname, 'public', 'about.html'));
@@ -102,14 +110,14 @@ app.patch('/api/books/:id', (request, response) => {
     const newTitle = request.body.title;
     const newYear = request.body.year;
     const newAuthor = request.body.author;
-/* 
-    books.forEach(book => {
-        if (book.id === idToUpdate) {
-            book.title = newTitle;
-            book.year = newYear;
-            book.author = newAuthor;
-        }
-    }); */
+    /* 
+        books.forEach(book => {
+            if (book.id === idToUpdate) {
+                book.title = newTitle;
+                book.year = newYear;
+                book.author = newAuthor;
+            }
+        }); */
 
 
     const book = books.find(book => book.id === idToUpdate);
