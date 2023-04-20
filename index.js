@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 /* List all the books 
 List the data of one book DONE
 Create a book (you can send the values using Postman)  DONE
-Update a book (you can send the values using Postman)
+Update a book (you can send the values using Postman) DONE
 Delete a book DONE
 Show the webpage on a browser. */
 
@@ -85,20 +85,33 @@ app.post('/api/books', (request, response) => {
 });
 
 //update a book
-app.patch('/api/books:id', (request, response) => {
+app.patch('/api/books/:id', (request, response) => {
     const idToUpdate = Number(request.params.id);
     const newTitle = request.body.title;
     const newYear = request.body.year;
     const newAuthor = request.body.author;
-
+/* 
     books.forEach(book => {
         if (book.id === idToUpdate) {
             book.title = newTitle;
             book.year = newYear;
             book.author = newAuthor;
         }
-    });
-    response.json(books);
+    }); */
+
+
+    const book = books.find(book => book.id === idToUpdate);
+    if (book) {
+        book.title = newTitle;
+        book.year = newYear;
+        book.author = newAuthor;
+        response.status(200).json(book)
+    } else {
+        response.status(404).json({
+            message: 'Book not found'
+        })
+    }
+
 });
 
 
