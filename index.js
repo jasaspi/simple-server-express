@@ -14,6 +14,10 @@ app.engine('handlebars', exphbs.engine({
 
 app.set('view engine', 'handlebars');
 
+app.get('/', (request, response) => {
+    response.render('index')
+});
+
 /* List all the books 
 List the data of one book DONE
 Create a book (you can send the values using Postman)  DONE
@@ -28,10 +32,10 @@ let books = [
 ]
 
 //route to '(route)home'
-app.get('/', (request, response) => {
-    //response.sendFile(path.join(__dirname, 'public', 'index.html'));
-    response.render('index');
-});
+// app.get('/', (request, response) => {
+//     //response.sendFile(path.join(__dirname, 'public', 'index.html'));
+//     response.render('index');
+// });
 
 app.get('/about', (request, response) => {
     response.sendFile(path.join(__dirname, 'public', 'about.html'));
@@ -129,8 +133,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((request, response, next) => {
     response.status(404).send("Sorry the requested resource was not found.")
 });
-
-
 
 
 const PORT = process.env.PORT || 5000;
